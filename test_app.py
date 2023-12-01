@@ -62,7 +62,7 @@ class BoggleAppTestCase(TestCase):
 
 
             #get current game and modify board to match test
-            word = ["PLANT","SLANT","BZZZZ"]
+            words = ["PLANT","SLANT","BZZZZ"]
 
             games[game_id].board = [
                 ["P", "L", "A", "N", "T"],
@@ -72,7 +72,7 @@ class BoggleAppTestCase(TestCase):
                 ["P", "L", "A", "N", "T"]
             ]
 
-            for test_word in word:
+            for test_word in words:
                 word_to_score = {"game_id" : game_id, "word" : test_word}
 
                 score_word_response = client.post(
@@ -80,14 +80,14 @@ class BoggleAppTestCase(TestCase):
                     json=word_to_score
                 )
 
-                score_word_json = score_word_response.get_json()
+                score_word_dict = score_word_response.get_json()
 
                 if(test_word == 'PLANT'):
-                    self.assertEqual(score_word_json['result'], "ok")
+                    self.assertEqual(score_word_dict, {'result' : 'ok'})
                 elif(test_word == 'SLANT'):
-                    self.assertEqual(score_word_json['result'], "not-on-board")
+                    self.assertEqual(score_word_dict['result'], "not-on-board")
                 elif(test_word == 'BZZZZ'):
-                    self.assertEqual(score_word_json['result'], "not-word")
+                    self.assertEqual(score_word_dict['result'], "not-word")
 
 
 

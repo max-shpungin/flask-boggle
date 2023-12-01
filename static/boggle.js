@@ -32,3 +32,10 @@ function displayBoard(board) {
 
 
 start();
+
+/** form submit handle */
+function handle_form_submit(){
+  // send words to back end and get results
+  // if not a legal play, display a message in the dom
+  // if a legal play, add this word in a bulleted list
+}
