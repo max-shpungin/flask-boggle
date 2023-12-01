@@ -32,16 +32,10 @@ def new_game():
 def score_word():
     """ Check if word is legal  (in word list and findable on board)
         Returns JSON of result e.g.
-            {result: 'not word'}, {result: 'not-on-bard}, {result: 'ok'}
+            {result: 'not-word'}, {result: 'not-on-bard}, {result: 'ok'}
     """
-    #gameIdAndWord = request.json()
-    #word = gameIdAndWord.get('word')
     word = request.json['word']
     game_id = request.json['game_id']
-
-    # request.json -> turning the json into the rq into a dict
-
-    # game_id, word -> pull this from the request.json
 
     if not games[game_id].is_word_in_word_list(word):
         return jsonify({"result": "not-word"})
@@ -51,9 +45,3 @@ def score_word():
 
     else:
         return jsonify({"result": "ok"})
-
-    # result = {}
-
-    # result["result"] = "not-word"
-    #     if not games[game_id].isword_in_word_list(word)
-    #     elif not games[game_id].check_word_on_board(word)

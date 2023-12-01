@@ -45,7 +45,7 @@ class BoggleAppTestCase(TestCase):
             json_response = response.get_json()
 
             self.assertIn('game_id', json_response)
-            self.assertIn('board', json_response) #how to check if contains list of lists?
+            self.assertIn('board', json_response)
 
     def test_api_score_word(self):
         """Test scoring a word from a JSON request"""
@@ -54,35 +54,40 @@ class BoggleAppTestCase(TestCase):
         # /api/new-game route, since that makes a new game and returns the game id.
 
         with app.test_client() as client:
-
-
             # Create a new game instance to get the game_id & board
 
             new_game_response = client.post('/api/new-game')
             new_game_dict = new_game_response.get_json()
             game_id = new_game_dict['game_id']
-            word = "PLANT"
 
-            new_game_dict['board'] = [
+
+            #get current game and modify board to match test
+            word = ["PLANT","SLANT","BZZZZ"]
+
+            games[game_id].board = [
+                ["P", "L", "A", "N", "T"],
+                ["P", "L", "A", "N", "T"],
+                ["P", "L", "A", "N", "T"],
+                ["P", "L", "A", "N", "T"],
                 ["P", "L", "A", "N", "T"]
             ]
 
-            breakpoint()
+            for test_word in word:
+                word_to_score = {"game_id" : game_id, "word" : test_word}
 
-            # Test scoring a word for the test game instance
+                score_word_response = client.post(
+                    '/api/score-word',
+                    json=word_to_score
+                )
 
-            word_to_score = {"game_id" : game_id, "word" : word}
+                score_word_json = score_word_response.get_json()
 
-            score_word_response = client.post(
-                '/api/score-word',
-                json=word_to_score
-            )
-
-            score_word_json = score_word_response.get_json()
-
-            breakpoint()
-
-            self.assertEqual(score_word_json['result'], "ok")
+                if(test_word == 'PLANT'):
+                    self.assertEqual(score_word_json['result'], "ok")
+                elif(test_word == 'SLANT'):
+                    self.assertEqual(score_word_json['result'], "not-on-board")
+                elif(test_word == 'BZZZZ'):
+                    self.assertEqual(score_word_json['result'], "not-word")
 
 
 
