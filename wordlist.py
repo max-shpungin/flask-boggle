@@ -25,10 +25,18 @@ class WordList:
         words = {w.strip().upper() for w in dict_file}
         dict_file.close()
 
-        return words
+        return words #it's returning a set!! {unique1,unique2...}
 
     def check_word(self, word):
-        """Is word in word list?"""
+        """Is word in word list?
+            >>> wl = WordList("dictionary.txt")
+            >>> wl.check_word('DRAGON')
+            True
+            >>> wl.check_word('FLUBBER')
+            True
+            >>> wl.check_word('FLUBBERZ')
+            False
+        """
 
         return word in self.words
 
