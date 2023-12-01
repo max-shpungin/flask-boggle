@@ -34,19 +34,26 @@ def score_word():
         Returns JSON of result e.g.
             {result: 'not word'}, {result: 'not-on-bard}, {result: 'ok'}
     """
-
-    word = request.json()['word']
-    game_id = request.json()['game-id']
+    #gameIdAndWord = request.json()
+    #word = gameIdAndWord.get('word')
+    word = request.json['word']
+    game_id = request.json['game-id']
 
     # request.json -> turning the json into the rq into a dict
 
     # game_id, word -> pull this from the request.json
 
     if not games[game_id].is_word_in_word_list(word):
-        return jsonify({result: "not-word"})
+        return jsonify({"result": "not-word"})
 
     if not games[game_id].check_word_on_board(word):
-        return jsonify({result: "not-on-board"})
+        return jsonify({"result": "not-on-board"})
 
     else:
-        return jsonify({result: "ok"})
+        return jsonify({"result": "ok"})
+
+    # result = {}
+
+    # result["result"] = "not-word"
+    #     if not games[game_id].isword_in_word_list(word)
+    #     elif not games[game_id].check_word_on_board(word)

@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, json
 
 from app import app, games
 
@@ -46,5 +46,29 @@ class BoggleAppTestCase(TestCase):
 
             self.assertIn('gameId', json)
             self.assertIn('board', json) #how to check if contains list of lists?
+
+    def test_api_score_word(self):
+        """Test scoring a word from a JSON request"""
+
+        # Your test function will need to use the
+        # /api/new-game route, since that makes a new game and returns the game id.
+
+        with app.test_client() as client:
+
+            new_game_response = client.post('/api/new-game')
+            new_game_dict = new_game_response.get_json()
+
+            game_id = new_game_dict['game_id']
+            word = new_game_dict['word']
+
+            word_to_score = {"game_id" : game_id, "word" : word}
+
+
+            score_word_response = client.post(
+                '/api/score-word',
+                data=word_to_score
+            )
+
+            score_word_json = response.get_json()
 
 
