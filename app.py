@@ -26,4 +26,12 @@ def new_game():
     game = BoggleGame()
     games[game_id] = game
 
-    return {"gameId": game_id, "board": game.board}
+    response = jsonify({"gameId": game_id, "board": game.board})
+
+    breakpoint()
+
+    return jsonify({"gameId": game_id, "board": game.board})
+
+    # test if we are actually getting a json
+    # among other tests we will write
+

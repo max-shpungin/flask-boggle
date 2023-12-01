@@ -36,3 +36,10 @@ class BoggleAppTestCase(TestCase):
         with app.test_client() as client:
             ...
             # write a test for this route
+
+            response = client.post('/api/new-game')
+
+
+
+            self.assertEqual(response.status_code, 200)
+
