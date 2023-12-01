@@ -26,12 +26,11 @@ def new_game():
     game = BoggleGame()
     games[game_id] = game
 
-    response = jsonify({"gameId": game_id, "board": game.board})
-
-    breakpoint()
-
     return jsonify({"gameId": game_id, "board": game.board})
 
-    # test if we are actually getting a json
-    # among other tests we will write
-
+@app.post("api/score-word")
+def score_word(game_id, word):
+    """ Check if word is legal  (in word list and findable on board)
+        Returns JSON of result e.g.
+            {result: 'not word'}, {result: 'not-on-bard}, {result: 'ok'}
+    """

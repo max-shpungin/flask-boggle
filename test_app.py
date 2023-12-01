@@ -34,12 +34,17 @@ class BoggleAppTestCase(TestCase):
         """Test starting a new game."""
 
         with app.test_client() as client:
-            ...
-            # write a test for this route
+
+            # the route returns JSON with a string game id,
+            #   and a list-of-lists for the board
+
+            # the route stores the new game in the games dictionary
 
             response = client.post('/api/new-game')
 
+            json = response.get_json()
 
+            self.assertIn('gameId', json)
+            self.assertIn('board', json) #how to check if contains list of lists?
 
-            self.assertEqual(response.status_code, 200)
 
