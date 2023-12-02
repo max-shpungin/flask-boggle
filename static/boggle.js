@@ -26,7 +26,15 @@ async function start() {
 /** Display board */
 
 function displayBoard(board) {
-  // $table.empty();
+  $table.empty();
+  for (let row of board){
+    let $tr = $('<tr>');
+    for (let cell of row){
+      let $td = $('<td>').text(cell);
+      $tr.append($td);
+    }
+    $table.append($tr);
+  }
   // loop over board and create the DOM tr/td structure
 }
 
