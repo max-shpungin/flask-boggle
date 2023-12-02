@@ -1,4 +1,4 @@
-from unittest import TestCase, json
+from unittest import TestCase
 
 from app import app, games
 
@@ -42,10 +42,10 @@ class BoggleAppTestCase(TestCase):
 
             response = client.post('/api/new-game')
 
-            json = response.get_json()
+            json_response = response.get_json()
 
-            self.assertIn('gameId', json)
-            self.assertIn('board', json) #how to check if contains list of lists?
+            self.assertIn('game_id', json_response)
+            self.assertIn('board', json_response) #how to check if contains list of lists?
 
     def test_api_score_word(self):
         """Test scoring a word from a JSON request"""
@@ -55,20 +55,39 @@ class BoggleAppTestCase(TestCase):
 
         with app.test_client() as client:
 
+
+            # Create a new game instance to get the game_id & board
+
             new_game_response = client.post('/api/new-game')
             new_game_dict = new_game_response.get_json()
-
             game_id = new_game_dict['game_id']
-            word = new_game_dict['word']
+            word = "PLANT"
+
+            new_game_dict['board'] = [
+                ["P", "L", "A", "N", "T"]
+            ]
+
+            breakpoint()
+
+            # Test scoring a word for the test game instance
 
             word_to_score = {"game_id" : game_id, "word" : word}
 
-
             score_word_response = client.post(
                 '/api/score-word',
-                data=word_to_score
+                json=word_to_score
             )
 
-            score_word_json = response.get_json()
+            score_word_json = score_word_response.get_json()
+
+            breakpoint()
+
+            self.assertEqual(score_word_json['result'], "ok")
+
+
+
+
+
+
 
 

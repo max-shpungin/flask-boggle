@@ -37,7 +37,7 @@ def score_word():
     #gameIdAndWord = request.json()
     #word = gameIdAndWord.get('word')
     word = request.json['word']
-    game_id = request.json['game-id']
+    game_id = request.json['game_id']
 
     # request.json -> turning the json into the rq into a dict
 
